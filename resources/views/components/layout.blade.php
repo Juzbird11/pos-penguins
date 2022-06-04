@@ -19,41 +19,10 @@
           <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
-          <li class="nav-item menu-items active">
-            <a class="nav-link" href="#">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="#">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">In Stock</span>
-            </a>
-          </li>
-
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="#">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Out Of Stock</span>
-            </a>
-          </li>
-
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="#">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Sale</span>
-            </a>
-          </li>
+          <x-sidebar-item name="Dashboard" route="/" />
+          <x-sidebar-item name="In Stock" route="/in-stock" />
+          <x-sidebar-item name="Out of Stock" route="/out-of-stock" />
+          <x-sidebar-item name="Sale" route="/sale" />
         </ul>
       </nav>
       <div class="container-fluid page-body-wrapper">
@@ -97,7 +66,7 @@
         </nav>
         <div class="main-panel">
           <div class="content-wrapper">
-              {{-- {{ $slot }} --}}
+              {{ $slot }}
           </div>
         </div>
       </div>

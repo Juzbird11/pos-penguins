@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-lg-8">
           @if(!$sale)
-          <form action="#" method="post" class="form-inline mb-3" id="createSale">
+          <form action="/sale/create" method="post" class="form-inline mb-3">
             @csrf
-              <button class="btn btn-info">
+              <button class="btn btn-info" id="createSale">
                 Create Sale
               </button> 
           </form>

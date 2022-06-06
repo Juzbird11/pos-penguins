@@ -2,12 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     public function index()
     {
-        return view('sale');
+        $sale_query = Sale::date(request('date'));
+
+        $total = $sale_query->sum('total');
+        $sales = $sale_query->paginate(10);
+
+        $weeklySales = Sale::thisWeek()->get()->groupBy(function($sale) {
+            return Carbon::parse($sale->updated_at)->format('Y-m-d');
+        })->map(function ($row) {
+            return $row->sum('total');
+        });
+
+        $weeklySaleTotal = $weeklySales->sum();
+        $date = [];
+        $weeklyDailySales = [];
+
+        foreach($weeklySales as $key => $value) {
+            $dates[] = $key;
+            $weeklyDailySales[] = $value; 
+        }
+        
+        return view('sale', compact('sales', 'total', 'dates', 'weeklyDailySales'));
+    }
+
+    public function store(Request $request)
+    {
+        $invoiceNo = now()->format('hisdmY');
+
+        $sale = Sale::create([
+            'invoice_no' => $invoiceNo,
+            'total' => 0,
+        ]);
+
+        $request->session()->put('sale', $sale);
+
+        return back();
+    }
+
+    public function addProduct(Request $request, Sale $sale, Product $product)
+    {
+        if($sale->products->contains($product->id)) {
+            return back()->with('message', 'Cannot Add');
+        }
+        
+        if($request->qty > $product->qty) {
+            return back()->with('message', 'Cannot Add');
+        };
+        
+        $product->qty -= $request->qty;
+        $product->update();
+        
+        $sale->products()->attach($product->id, ['qty' => $request->qty, 'price' => $product->price]);
+
+        return back();
+    }
+
+    public function removeProduct(Sale $sale, Product $product)
+    {
+        $product->qty += $sale->products->find($product->id)->pivot->qty;
+        $product->update();
+
+        $sale->products()->detach($product->id);
+        return back();
+    }
+
+    public function confirm(Request $request, Sale $sale)
+    {
+        $sale->total = $request->total;
+        $sale->update();
+        
+        $request->session()->forget('sale');
+
+        return redirect("/sale/print/{$sale->id}");
+    }
+    
+    public function print(Sale $sale)
+    {
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('print', ['sale' => $sale]);
+        return $pdf->stream();
+
     }
 }

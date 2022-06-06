@@ -3,28 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        // $products = Product::paginate(6);
-        // return view('product.index', compact('products'));
-        return view('index');
+        $products = Product::search(request('search'))->where('qty', '>', 0)->paginate(6);
+        $sale = null;
+
+        if(session()->has('sale')){
+            $sale = Sale::find(session()->get('sale')->id);
+        }
+
+        return view('index', compact('products', 'sale'));
+    }
+
+    public function create()
+    {
+        return view('create');
     }
 
     public function outOfStock()
     {
-        // $products = Product::whereColumn('min_qty', '>=', 'qty')->paginate(6);
-        // return view('product.out-of-stock', compact('products'));
-
-        return view('out-of-stock');
+        $products = Product::search(request('search'))->whereColumn('min_qty', '>=', 'qty')->paginate(6);
+        return view('out-of-stock', compact('products'));
     }
 
-    public function inStock()
+    public function allStocks()
     {
-        return view('in-stock');
+        $products = Product::search(request('search'))->paginate(6);
+        return view('all-stocks', compact('products'));
     }
 
     public function store(Request $request)
@@ -39,16 +49,25 @@ class ProductController extends Controller
         ]);
 
         Product::create($validate);
-
-        return back();
+        return back()->with('message', 'Add successfully');
     }
 
-    public function addQty(Request $request, Product $product)
+    public function edit(Product $product)
     {
-        $product->qty = $request->qty;
-        $product->update();
-
-        return back(); 
+        return view('edit', compact('product'));
     }
 
+    public function update(Request $request, Product $product)
+    {
+        $validate = $request->validate([
+            'name' => 'required',
+            'qty' => 'required',
+            'min_qty' => 'required',
+            'price' => 'required',
+            'baseprice' => 'required',
+        ]);
+        $product->update($validate);
+
+        return back()->with('message', 'Edit Successfully');
+    }
 }

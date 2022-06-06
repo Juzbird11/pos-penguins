@@ -1,0 +1,1 @@
+<input type="text" class="form-control" placeholder="Search products" name="search" value="{{ request('search') }}" autocomplete="off" autofocus>

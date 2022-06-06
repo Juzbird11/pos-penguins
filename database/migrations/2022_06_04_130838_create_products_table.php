@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->smallInteger('qty')->unsigned();
             $table->tinyInteger('min_qty')->unsigned();
             $table->integer('price')->unsigned();
-            $table->integer('base_price')->unsigned();
+            $table->integer('baseprice')->unsigned();
             $table->timestamps();
         });
     }

@@ -15,4 +15,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Sale::class)->withPivot(['price', 'qty'])->withTimestamps();
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->when($search, function($query) use($search) {
+            $query->where('barcode', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%');
+        });
+    }
 }

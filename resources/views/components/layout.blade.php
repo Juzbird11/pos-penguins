@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CH Service</title>
     <link rel="stylesheet" href="/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/css/flag-icon.min.css">
     
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
     <div class="container-scroller">
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="#"><img src="/logo/logo.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="#"><img src="/logo/logo-mini.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
           <x-sidebar-item name="Dashboard" route="/" />
-          <x-sidebar-item name="In Stock" route="/in-stock" />
+          <x-sidebar-item name="All Stocks" route="/all-stocks" />
           <x-sidebar-item name="Out of Stock" route="/out-of-stock" />
           <x-sidebar-item name="Sale" route="/sale" />
         </ul>
@@ -33,14 +34,14 @@
             </button>
             <ul class="navbar-nav w-100">
               <li class="nav-item d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Product</a>
+                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" aria-expanded="false" href="/create">+ Create New Product</a>
               </li>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <p class="mb-0 d-sm-block navbar-profile-name">CH</p>
+                    <p class="mb-0 d-sm-block navbar-profile-name">Ann Twel</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
@@ -52,7 +53,14 @@
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Log out</p>
+                      <p class="preview-subject mb-1">
+                        <form action="/logout" method="post">
+                          @csrf
+                          <button class="btn">
+                            LOGOUT
+                          </button>
+                        </form>
+                      </p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>

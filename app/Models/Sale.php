@@ -10,7 +10,7 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['invoice_no', 'total'];
+    protected $fillable = ['customer', 'invoice_no', 'total'];
 
     public function products()
     {

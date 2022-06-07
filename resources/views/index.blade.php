@@ -1,13 +1,29 @@
+<style>
+  .fw {
+    width: 40%;
+    min-width: 140px;
+  }
+</style>
+
 <x-layout>
     <div class="row">
         <div class="col-lg-8">
           @if(!$sale)
-          <form action="/sale/create" method="post" class="form-inline mb-3">
-            @csrf
-              <button class="btn btn-info" id="createSale">
-                Create Sale
-              </button> 
-          </form>
+          <div class="card mb-2">
+            <div class="card-body">
+              <form action="/sale/create" method="post">
+                <div class="input-group mb-2 mr-sm-2">
+                  @csrf
+                  <input type="text" class="form-control" placeholder="Customer" name="customer" autocomplete="off" required>
+                  <div class="input-group-prepend">
+                      <button class="btn btn-info">
+                          <i class="mdi mdi-cart"></i>
+                      </button>
+                  </div>
+              </div>
+              </form>
+            </div>
+          </div>
           @endif
 
             <div class="card mb-2">
@@ -43,13 +59,13 @@
                             <td>{{ $product->qty }}</td>
                             <td>{{ $product->price }}</td>
                             @if($sale)
-                              <td>
+                              <td class="fw">
                                 <form action="/sale/add-product/{{ $sale->id }}/{{ $product->id }}" method="post">
                                   <div class="input-group mb-2 mr-sm-2">
                                       @csrf
-                                      <input type="number" class="form-control" placeholder="Qty" name="qty" autocomplete="off" required>
+                                      <input type="number" class="form-control" placeholder="Qty" name="qty" min="1" autocomplete="off" required>
                                       <div class="input-group-prepend">
-                                          <button class="btn btn-success">
+                                          <button class="btn btn-primary">
                                               <i class="mdi mdi-cart-plus"></i>
                                           </button>
                                       </div>
@@ -61,6 +77,8 @@
                           @endforeach
                         </tbody>
                       </table>
+
+                      <x-paginator :type="$products" />
                     </div>
                 </div>
             </div>
@@ -69,8 +87,20 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h4 class="m-0 d-flex align-items-center">Invoice No. : {{ $sale->invoice_no }} </h4>
+                    <div class="mb-2">
+                      <table>
+                        <tr>
+                          <th>Invoice No.</th>
+                          <td>:</td>
+                          <td>{{ $sale->invoice_no }}</td>
+                        </tr>
+
+                        <tr>
+                          <th>Customer</th>
+                          <td>:</td>
+                          <td>{{ $sale->customer }}</td>
+                        </tr>
+                      </table>
                     </div>
                   <div class="table-responsive">
                     <table class="table table-striped table-sm">

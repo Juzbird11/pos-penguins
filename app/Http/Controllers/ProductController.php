@@ -27,13 +27,13 @@ class ProductController extends Controller
 
     public function outOfStock()
     {
-        $products = Product::search(request('search'))->whereColumn('min_qty', '>=', 'qty')->paginate(6);
+        $products = Product::search(request('search'))->whereColumn('min_qty', '>=', 'qty')->paginate(8);
         return view('out-of-stock', compact('products'));
     }
 
     public function allStocks()
     {
-        $products = Product::search(request('search'))->paginate(6);
+        $products = Product::search(request('search'))->paginate(8);
         return view('all-stocks', compact('products'));
     }
 

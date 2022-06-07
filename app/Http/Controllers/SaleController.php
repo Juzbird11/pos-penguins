@@ -23,15 +23,17 @@ class SaleController extends Controller
         });
 
         $weeklySaleTotal = $weeklySales->sum();
-        $date = [];
+        $dates = [];
         $weeklyDailySales = [];
 
         foreach($weeklySales as $key => $value) {
             $dates[] = $key;
             $weeklyDailySales[] = $value; 
         }
-        
-        return view('sale', compact('sales', 'total', 'dates', 'weeklyDailySales'));
+
+        $date = Carbon::parse(request('date'));
+
+        return view('sale', compact('sales', 'total', 'date', 'dates', 'weeklyDailySales'));
     }
 
     public function store(Request $request)
@@ -40,6 +42,7 @@ class SaleController extends Controller
 
         $sale = Sale::create([
             'invoice_no' => $invoiceNo,
+            'customer' => $request->customer,
             'total' => 0,
         ]);
 

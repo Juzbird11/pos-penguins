@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
                         <div>
-                            <h4 class="m-0 d-flex align-items-center">Sale Today</h4>
+                            <h4 class="m-0 d-flex align-items-center">Sale {{ $date->isToday() ? 'Today' : "({$date->format('d M Y')})"  }}</h4>
                             <h4>Total(mmk) : {{ $total }}</h4>
                         </div>
                         <form method="get" class="col-7 col-lg-5">
@@ -24,6 +24,7 @@
                       <thead>
                         <tr>
                           <th>Invoice No.</th>
+                          <th>Customer</th>
                           <th>Total</th>
                         </tr>
                       </thead>
@@ -31,6 +32,7 @@
                         @foreach($sales as $sale)
                         <tr>
                           <td><a href="/sale/print/{{$sale->id}}">{{ $sale->invoice_no }}</a></td>
+                          <td>{{ $sale->customer }}</td>
                           <td>{{ $sale->total }}</td>
                         </tr>
                         @endforeach
@@ -59,10 +61,10 @@
     $(function() {
         'use strict';
         var data = {
-            labels: {!! json_encode(array_reverse($dates)) !!},
+            labels: {!! json_encode($dates) !!},
             datasets: [{
             label: 'Total Price',
-            data: {!! json_encode(array_reverse($weeklyDailySales)) !!},
+            data: {!! json_encode($weeklyDailySales) !!},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

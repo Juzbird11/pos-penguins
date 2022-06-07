@@ -7,16 +7,37 @@
     <title>CH Service</title>
     <style>
         @page { 
-            margin-top: 200px;
-            margin-bottom: 40px; 
+            margin-top: 290px;
+            margin-bottom: 150px; 
         }
 
         .header { 
             position: fixed;
             left: 0px; 
-            top: -160px; 
+            top: -220px; 
             right: 0px; 
             height: 100px; 
+        }
+
+        .footer { 
+            position: fixed;
+            bottom: -90px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        .logo * {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .invoice {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .title {
@@ -26,21 +47,18 @@
         }
 
         .col-left {
-            width: 50%;
+            width: 60%;
             float: left;
-            padding: 10px;
-            border-top: 1px solid #000;
-            border-left: 1px solid #000;
-            border-bottom: 1px solid #000;
         }
 
         .col-right {
-            width: 50%;
+            width: 25%;
             float: right;
-            padding: 10px;
-            border-top: 1px solid #000;
-            border-right: 1px solid #000;
-            border-bottom: 1px solid #000;
+        }
+
+        .col-footer-right {
+            width: 20%;
+            float: right;
         }
 
         .border {
@@ -53,6 +71,10 @@
             margin-bottom: 1rem;
             color: #212529;
             background-color: transparent;
+        }
+
+        .table thead th {
+            background-color: #9096a1;
         }
 
         .table th,
@@ -134,6 +156,10 @@
             color: white;
         }
 
+        .text-red {
+            color: red;
+        }
+
         .red {
             background-color: red;
             color: white;
@@ -142,21 +168,51 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="mb-5 text-center">CH Service</h1>
+        <div class="logo">
+            <h1 class="text-red">ACG</h1>
+            <h3>PC & LAPTOP</h3>
+            <h3>SERVICE</h3>
+        </div>
+        <h2 class="invoice">INVOICE</h2>
         <div>
-            <table class="table-info">
-                <tr>
-                    <th>Invoice No.</th>
-                    <td>:</td>
-                    <td>{{ $sale->invoice_no }}</td>
-                </tr>
+            <div class="col-left">
+                <table class="table-info">
+                    <tr>
+                        <th>Invoice No.</th>
+                        <td>:</td>
+                        <td>{{ $sale->invoice_no }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Customer</th>
+                        <td>:</td>
+                        <td>{{ $sale->customer }}</td>
+                    </tr>                    
+                </table>
+            </div>
 
-                <tr>
-                    <th>Date</th>
-                    <td>:</td>
-                    <td>{{ $sale->created_at->format('d M Y h:m:s') }}</td>
-                </tr>
-            </table>
+            <div class="col-right">
+                <table class="table-info">
+                    <tr>
+                        <th>Issue Date</th>
+                        <td>:</td>
+                        <td class="text-right">{{ $sale->created_at->format('d M Y') }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <div class="col-left">
+                <p>Please keep warranty card and vouncher to valid your warranty.</p>
+                <p>Thank you for your bussiness.</p>
+            </div>
+            <div class="col-footer-right">
+                <p>--------------------</p>
+                <p>Authorized Sign</p>
+            </div>
         </div>
     </div>
 
@@ -182,8 +238,9 @@
         </tbody>
 
         <tfoot>
-            <tr>                
-                <th colspan="3" class="text-right" >Total(mmk)</th>
+            <tr>              
+                <td></td>  
+                <th colspan="2" class="text-center">Total(mmk)</th>
                 <th class="text-right">{{ $sale->total }}</th>
             </tr>
         </tfoot>

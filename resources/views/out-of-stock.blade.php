@@ -28,6 +28,8 @@
                 @endforeach
               </tbody>
             </table>
+
+            <x-paginator :type="$products" />
           </div>
         </div>
     </div>

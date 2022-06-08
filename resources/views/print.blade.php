@@ -7,7 +7,7 @@
     <title>CH Service</title>
     <style>
         @page { 
-            margin-top: 290px;
+            margin-top: 275px;
             margin-bottom: 150px; 
         }
 
@@ -25,6 +25,7 @@
             left: 0px;
             right: 0px;
             height: 50px;
+            font-size: 15px;
         }
 
         .footer p {
@@ -32,7 +33,7 @@
         }
 
         .logo * {
-            margin: 0;
+            margin: 1px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -47,12 +48,12 @@
         }
 
         .col-left {
-            width: 60%;
+            width: 70%;
             float: left;
         }
 
         .col-right {
-            width: 25%;
+            width: 30%;
             float: right;
         }
 
@@ -235,6 +236,13 @@
                 <td class="text-right">{{ $product->pivot->qty * $product->pivot->price  }}</td>
             </tr>
             @endforeach
+
+            @foreach($sale->serviceFees as $fee)
+            <tr>
+                <td >{{ $fee->description }}</td>
+                <td colspan="3" class="text-right">{{ $fee->fees }}</td>
+            </tr>
+            @endforeach
         </tbody>
 
         <tfoot>
@@ -248,11 +256,11 @@
 
     <script type="text/php">
         if ( isset($pdf) ) {
-            $x = ($pdf->get_width() + 460) / 2;
+            $x = ($pdf->get_width() + 380) / 2;
             $y = $pdf->get_height() - 35;
             $text = "{PAGE_NUM} of {PAGE_COUNT}";
             $font = $fontMetrics->get_font("helvetica", "bold");
-            $size = 14;
+            $size = 10;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default

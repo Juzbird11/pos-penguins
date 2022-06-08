@@ -17,6 +17,11 @@ class Sale extends Model
         return $this->belongsToMany(Product::class)->withPivot(['qty', 'price'])->withTimestamps();
     }
 
+    public function serviceFees()
+    {
+        return $this->hasMany(ServiceFee::class);
+    }
+
     public function scopeDate($query, $date)
     {
         $date = $date ? Carbon::parse($date) : now();

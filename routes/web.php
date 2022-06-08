@@ -16,6 +16,7 @@ Route::middleware('pin')->group(function() {
     Route::post('/store', [App\Http\Controllers\ProductController::class, 'store']);
     Route::post('/update/{product}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::post('/sale/create', [App\Http\Controllers\SaleController::class, 'store']);
+    Route::post('/sale/add-service/{sale}', [App\Http\Controllers\SaleController::class, 'addServiceFee']);
     Route::post('/sale/confirm/{sale}', [App\Http\Controllers\SaleController::class, 'confirm']);
     Route::post('/sale/add-product/{sale}/{product}', [App\Http\Controllers\SaleController::class, 'addProduct']);
     Route::post('/sale/remove-product/{sale}/{product}', [App\Http\Controllers\SaleController::class, 'removeProduct']);

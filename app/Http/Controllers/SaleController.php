@@ -69,6 +69,18 @@ class SaleController extends Controller
         return back();
     }
 
+    public function addServiceFee(Request $request, Sale $sale)
+    {
+        $validate = $request->validate([
+            'description' => 'required',
+            'fees' => 'required',
+        ]);
+
+        $sale->serviceFees()->create($validate);
+
+        return back()->with('message', 'Add Successfully');
+    }
+
     public function removeProduct(Sale $sale, Product $product)
     {
         $product->qty += $sale->products->find($product->id)->pivot->qty;
@@ -91,8 +103,8 @@ class SaleController extends Controller
     public function print(Sale $sale)
     {
         $pdf = app('dompdf.wrapper');
+        $pdf->setPaper([0, 0, 504, 612]);
         $pdf->loadView('print', ['sale' => $sale]);
         return $pdf->stream();
-
     }
 }

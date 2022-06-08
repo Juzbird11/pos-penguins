@@ -26,6 +26,25 @@
           </div>
           @endif
 
+          @if($sale)
+            <div class="card mb-2">
+              <div class="card-body">
+                <form action="/sale/add-service/{{ $sale->id }}" method="post" class="form-inline justify-content-end">
+                  <div class="input-group ">
+                    @csrf
+                    <input type="text" name="description" class="form-control mr-2" placeholder="Service Description" autocomplete="off">
+                    <input type="number" class="form-control" placeholder="Fees" name="fees" min="1" autocomplete="off" required>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary d-block d-lg-inline">
+                            <i class="mdi mdi-plus"></i>
+                        </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            @endif
+
             <div class="card mb-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
@@ -102,48 +121,64 @@
                         </tr>
                       </table>
                     </div>
-                  <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                          <th>Sub Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @php
-                          $total = 0;
-                        @endphp
-
-                        @foreach($sale->products as $product)
-                        <tr>
-                          <td>{{ $product->name }}</td>
-                          <td>{{ $product->pivot->qty }}</td>
-                          <td>{{ $product->pivot->price }}</td>
-                          <td>{{ $product->pivot->qty * $product->pivot->price }}</td>
-                          <td>
-                            <form action="/sale/remove-product/{{$sale->id}}/{{$product->id}}" method="post">
-                              @csrf
-                              <button class="btn-danger">x</button>
-                            </form>
-                          </td>
-                        </tr>
+                    <div class="table-responsive mb-2">
+                      <table class="table table-striped table-sm">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Sub Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                           @php
-                            $total += $product->pivot->qty * $product->pivot->price;                        
+                            $total = 0;
                           @endphp
-                        @endforeach
-                      </tbody>
 
-                      <tfoot>
-                        <tr>
-                          <th colspan="2">Total(mmk)</th>
-                          <th colspan="3">{{ $total }}</th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
+                          @foreach($sale->products as $product)
+                          <tr>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->pivot->qty }}</td>
+                            <td>{{ $product->pivot->price }}</td>
+                            <td class="text-right">{{ $product->pivot->qty * $product->pivot->price }}</td>
+                            <td>
+                              <form action="/sale/remove-product/{{$sale->id}}/{{$product->id}}" method="post" class="m-1">
+                                @csrf
+                                <button class="btn-danger">x</button>
+                              </form>
+                            </td>
+                          </tr>
+                            @php
+                              $total += $product->pivot->qty * $product->pivot->price;                        
+                            @endphp
+                          @endforeach
+
+                          @foreach($sale->serviceFees as $fee)
+                          <tr>
+                            <td>{{ $fee->description }}</td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right">{{ $fee->fees }}</td>
+                            <td></td>
+                          </tr>
+                            @php
+                              $total += $fee->fees;                        
+                            @endphp
+                          @endforeach
+                        </tbody>
+
+                        <tfoot>
+                          <tr>
+                            <th>Total(mmk)</th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-right">{{ $total }}</th>
+                            <th></th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                 </div>
 
                 <div class="card-footer">

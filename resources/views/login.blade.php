@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CH Service</title>
+    <title>POS Penguin</title>
 
     <link rel="stylesheet" href="/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/css/vendor.bundle.base.css">
@@ -16,7 +16,7 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">CH Service</h3>
+                <h3 class="card-title text-left mb-3">POS Penguin</h3>
                 @if(session()->has('pin'))
                   <p class="alert alert-danger">{{ session()->get('pin') }}</p>
                 @endif

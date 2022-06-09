@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CH Service</title>
+    <title>POS Penguin</title>
     <link rel="stylesheet" href="/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/css/flag-icon.min.css">
@@ -17,7 +17,6 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a class="sidebar-brand brand-logo" href="#"><img src="/logo/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="#"><img src="/logo/logo-mini.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
           <x-sidebar-item name="Dashboard" route="/" />
@@ -41,7 +40,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <p class="mb-0 d-sm-block navbar-profile-name">Ann Twel</p>
+                    <p class="mb-0 d-sm-block navbar-profile-name">Penguin</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
